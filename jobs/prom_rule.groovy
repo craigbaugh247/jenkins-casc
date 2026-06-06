@@ -32,7 +32,7 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo 'Validating Prometheus rule files using promtool...'
                                 
                                 // Runs a temporary promtool container to check all yaml files in the rules directory
-                                sh 'docker run --rm --entrypoint /bin/promtool -v $(pwd)/rules:/tmp/rules prom/prometheus:latest check rules /tmp/rules/'
+                                sh 'FILES=$(find rules -name "*_rules.yml"); if [ -z "$FILES" ]; then echo "No files found"; exit 1; fi; docker run --rm --entrypoint /bin/promtool -v "$(pwd)":/workspace -w /workspace prom/prometheus:latest check rules $FILES'
                             }
                         }
 
