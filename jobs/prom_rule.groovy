@@ -16,16 +16,15 @@ pipelineJob('prometheus-rules-pipeline-job') {
                     stages {
                         stage('Checkout Code') {
                           steps {
-                            sshagent(credentials: ['github-ssh-key']) {
-                              checkout scmGit(
-                                branches: [[name: 'main']],
-                                userRemoteConfigs: [[
-                                  url: 'git@github.com:your-organization/your-repo.git'
-                                ]]
-                              )
-                            }
+                            checkout scmGit(
+                              branches: [[name: 'main']],
+                              userRemoteConfigs: [[
+                                url: 'git@github.com:craigbaugh247/prometheus_rules.git',
+                                credentialsId: 'github-ssh-key'
+                              ]]
+                            )
                           }
-                   }
+                        }
 
                         stage('Validate Rules') {
                             steps {
