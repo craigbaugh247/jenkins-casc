@@ -8,6 +8,7 @@ pipelineJob('prometheus-rules-pipeline-job') {
                     agent any
 
                     environment {
+                        GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
                         PROM_CONTAINER_NAME = 'prometheus'
                         PROM_RULES_DIR     = '/etc/prometheus/rules/'
                         PROM_RELOAD_URL    = 'http://prometheus:9090/-/reload'
@@ -31,7 +32,7 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo 'Validating Prometheus rule files using promtool...'
                                 
                                 // Runs a temporary promtool container to check all yaml files in the rules directory
-                                sh 'promtool check rules ./rules/*.rules.yml'
+                                sh 'docker run --rm -v $(pwd)/rules:/tmp/rules prom/prometheus:latest promtool check rules /tmp/rules/*.rules.yml'
                             }
                         }
 
