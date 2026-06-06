@@ -42,12 +42,12 @@ pipelineJob('prometheus-rules-pipeline-job') {
 
                         stage('Deploy Rules') {
                             steps {
-                                echo "Copying rule files to container: ${PROM_CONTAINER_NAME}..."
+                                echo "Copying rule files to container: \${PROM_CONTAINER_NAME}..."
                                 
                                 // Clear out old rules inside the container and copy the new ones over
                                 sh """
-                                    docker exec ${PROM_CONTAINER_NAME} rm -rf ${PROM_RULES_DIR}*
-                                    docker cp rules/. ${PROM_CONTAINER_NAME}:${PROM_RULES_DIR}
+                                    docker exec \${PROM_CONTAINER_NAME} rm -rf \${PROM_RULES_DIR}*
+                                    docker cp rules/. \${PROM_CONTAINER_NAME}:\${PROM_RULES_DIR}
                                 """
                             }
                         }
@@ -58,7 +58,7 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 
                                 // Send a POST request to the API reload endpoint to apply changes instantly
                                 sh """
-                                    curl -X POST -s -o /dev/null -w "%{http_code}" ${PROM_RELOAD_URL} | grep "200"
+                                    curl -X POST -s -o /dev/null -w "%{http_code}" \${PROM_RELOAD_URL} | grep "200"
                                 """
                             }
                         }
