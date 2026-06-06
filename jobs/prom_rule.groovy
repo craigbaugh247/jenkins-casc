@@ -31,8 +31,7 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo 'Validating Prometheus rule files using promtool...'
                                 
                                 // Runs a temporary promtool container to check all yaml files in the rules directory
-                                sh '
-                                promtool check rules ./rules/*.rules.yml'
+                                sh 'promtool check rules ./rules/*.rules.yml'
                             }
                         }
 
