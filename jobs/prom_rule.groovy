@@ -32,11 +32,11 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo 'Validating Prometheus rule files using promtool...'
                                 
                                 // Runs a temporary promtool container to check all yaml files in the rules directory
-                                sh """
-                                    docker run --rm -v \$(pwd)/rules:/tmp/rules \
+                                sh '''
+                                    docker run --rm -v $(pwd)/rules:/tmp/rules \
                                     prom/prometheus:latest \
                                     promtool check rules /tmp/rules/*.rules.yml
-                                """
+                                '''
                             }
                         }
 
@@ -45,10 +45,10 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo "Copying rule files to container: \${PROM_CONTAINER_NAME}..."
                                 
                                 // Clear out old rules inside the container and copy the new ones over
-                                sh """
-                                    docker exec \${PROM_CONTAINER_NAME} rm -rf \${PROM_RULES_DIR}*
-                                    docker cp rules/. \${PROM_CONTAINER_NAME}:\${PROM_RULES_DIR}
-                                """
+                                sh '''
+                                    docker exec ${PROM_CONTAINER_NAME} rm -rf ${PROM_RULES_DIR}*
+                                    docker cp rules/. ${PROM_CONTAINER_NAME}:${PROM_RULES_DIR}
+                                '''
                             }
                         }
 
@@ -57,9 +57,9 @@ pipelineJob('prometheus-rules-pipeline-job') {
                                 echo 'Triggering Prometheus configuration dynamic reload...'
                                 
                                 // Send a POST request to the API reload endpoint to apply changes instantly
-                                sh """
-                                    curl -X POST -s -o /dev/null -w "%{http_code}" \${PROM_RELOAD_URL} | grep "200"
-                                """
+                                sh '''
+                                    curl -X POST -s -o /dev/null -w "%{http_code}" ${PROM_RELOAD_URL} | grep "200"
+                                '''
                             }
                         }
                     }
