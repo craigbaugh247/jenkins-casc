@@ -34,7 +34,7 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                         stage('Generate Dashboard') {
                             steps {
                                 // compile payload dynamically:
-                                sh 'go run main.go' 
+                                sh 'go run dash.go' 
                                 
                                 // Confirm the target dashboard file exists
                                 sh 'ls -la ./dashboard.json'
