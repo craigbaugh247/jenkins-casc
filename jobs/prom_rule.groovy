@@ -8,7 +8,6 @@ pipelineJob('prometheus-rules-pipeline-job') {
                     agent any
 
                     environment {
-                        GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
                         PROM_CONTAINER_NAME = 'prometheus'
                         PROM_RULES_DIR     = '/etc/prometheus/rules/'
                         PROM_RELOAD_URL    = 'http://prometheus:9090/-/reload'
