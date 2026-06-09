@@ -30,18 +30,28 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                             )
                           }
                         }
-
-                        stage('Generate Dashboard') {
+                        stage('Build Go App') {
                             steps {
-                                // compile payload dynamically:
-                                sh 'go mod download github.com/grafana/grafana-foundation-sdk/go && go mod tidy'
-                                sh 'go run dash.go' 
-                                
-                                // Confirm the target dashboard file exists
-                                sh 'ls -la ./dashboard.json'
+                                // 1. Invoke the Go toolset installed by the plugin
+                                golang('go-1.26.0') { // Match your exact global tool configuration name
+                                    
+                                    // 2. Ensure Go modules are turned on explicitly
+                                    withEnv(['GO111MODULE=on']) {
+                                        
+                                        // 3. MANDATORY: Point to the directory containing your go.mod
+                                        // Change 'src/my-project' if your code lives in a subdirectory
+                                        dir('.') { 
+                                            
+                                            // 4. Always tidy modules first to pull dependencies
+                                            sh 'go mod tidy'
+                                            
+                                            // 5. Run your build or tests
+                                            sh 'go build -o myapp main.go'
+                                        }
+                                    }
+                                }
                             }
                         }
-
                         stage('Deploy to Grafana') {
                             steps {
                                 // Bind the JCasC credential ID into environment variables
