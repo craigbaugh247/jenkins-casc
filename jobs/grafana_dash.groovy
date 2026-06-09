@@ -6,7 +6,7 @@ pipelineJob('grafana-dashboards-pipeline-job') {
             script('''
                 pipeline {
                     agent any
-                    tools { go_lang '1.26.0' }
+                    tools { go '1.26.0' }
 
                     environment {
                         // Define your Grafana server instance details globally
