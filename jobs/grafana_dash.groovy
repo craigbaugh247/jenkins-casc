@@ -51,6 +51,7 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                                 )]) {
                                     script {
                                         // Deploy the dashboard using the gcx tool
+                                        sh gcx dev scaffold --lang go'
                                         sh 'gcx config set contexts.default.grafana.user admin'
                                         sh 'gcx config set contexts.default.grafana.password admin'
                                         sh 'gcx resources push dashboards --path ./dashboard.json'
