@@ -35,7 +35,7 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                             steps {
                                 // compile payload dynamically:
                                 sh 'go mod download github.com/grafana/grafana-foundation-sdk/go && go mod tidy'
-                                sh 'go run dash.go' 
+                                sh 'go run main.go' 
                                 
                                 // Confirm the target dashboard file exists
                                 sh 'ls -la ./dashboard.json'
