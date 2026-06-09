@@ -14,6 +14,11 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                     }
 
                     stages {
+                        stage('Check Go Version') {
+                          steps {
+                            sh 'go version'
+                          }
+                        }
                         stage('Checkout Code') {
                           steps {
                             checkout scmGit(
