@@ -34,6 +34,7 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                         stage('Generate Dashboard') {
                             steps {
                                 // compile payload dynamically:
+                                sh 'go mod download github.com/grafana/grafana-foundation-sdk/go && go mod tidy'
                                 sh 'go run dash.go' 
                                 
                                 // Confirm the target dashboard file exists
@@ -51,7 +52,6 @@ pipelineJob('grafana-dashboards-pipeline-job') {
                                 )]) {
                                     script {
                                         // Deploy the dashboard using the gcx tool
-                                        sh 'go mod download github.com/grafana/grafana-foundation-sdk/go && go mod tidy'
                                         sh 'gcx config set contexts.default.grafana.user admin'
                                         sh 'gcx config set contexts.default.grafana.password admin'
                                         sh 'gcx resources push dashboards --path ./dashboard.json'
