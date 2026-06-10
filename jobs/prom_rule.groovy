@@ -1,4 +1,4 @@
-pipelineJob('prometheus-rules-pipeline-job') {
+pipelineJob('prometheus/deploy-prometheus-rules') {
     description('A pipeline job to test and deploy Prometheus rules.')
     
     definition {

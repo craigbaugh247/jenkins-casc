@@ -1,4 +1,4 @@
-pipelineJob('grafana-dashboards-pipeline-job') {
+pipelineJob('grafana/deploy-grafana-dashboards') {
     description('A pipeline job to check Docker CLI.')
     
     definition {
