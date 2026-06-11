@@ -14,8 +14,8 @@ pipelineJob('manage-containers-job') {
                     stages {
                       stage('Performing Action') {
                         steps {
-                          sh 'echo "${params.ACTION}ing container ${params.CONTAINER}"'
-                          sh 'docker ${params.ACTION} ${params.CONTAINER}'
+                          sh 'echo "$ACTION container $CONTAINER"'
+                          sh 'docker $ACTION $CONTAINER'
                         }
                       }
                     }
