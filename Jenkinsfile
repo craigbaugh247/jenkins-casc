@@ -11,7 +11,7 @@ pipeline {
             steps {
                 jobDsl(
                     targets: '''jobs/**/*.groovy
-                                folders/**/*.groovy''',
+                                vars/**/*.groovy''',
                     removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
                     lookupStrategy: 'JENKINS_ROOT'
