@@ -10,8 +10,7 @@ pipeline {
         stage('Process Job DSL') {
             steps {
                 jobDsl(
-                    targets: '''jobs/**/*.groovy
-                                vars/**/*.groovy''',
+                    targets: '''jobs/**/*.groovy,
                     removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
                     lookupStrategy: 'JENKINS_ROOT'
