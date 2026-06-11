@@ -4,6 +4,7 @@ pipelineJob('restart-components-job') {
     definition {
         cps {
             script('''
+                @Library('shared-lib') _
                 pipeline {
                     agent any
                     parameters {
