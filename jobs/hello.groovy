@@ -4,6 +4,7 @@ pipelineJob('hello-world-pipeline-job') {
     definition {
         cps {
             script('''
+                @Library('shared-lib') _
                 pipeline {
                     agent any
                     stages {
@@ -11,6 +12,14 @@ pipelineJob('hello-world-pipeline-job') {
                             steps {
                                 echo 'Hello World!'
                             }
+                        }
+                    }
+                    post {
+                        success {
+                            sendSlackMessage(status: 'SUCCESS', channel: '#jenkins')
+                        }
+                        failure {
+                             sendSlackMessage(status: 'FAILURE', channel: '#jenkins')
                         }
                     }
                 }
