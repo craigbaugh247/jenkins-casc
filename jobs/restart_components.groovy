@@ -6,16 +6,17 @@ pipelineJob('restart-components-job') {
             script('''
                 pipeline {
                     agent any
-                        parameters {
-                            choice(name: 'COMPONENT', choices: getComponentsDropDown(), description: 'Select the component')
+                    parameters {
+                        choice(name: 'COMPONENT', choices: getComponentsDropDown(), description: 'Select the component')
                     }
-                        stages {
-                          stage('Example') {
-                            steps {
-                              echo "Selected component: ${params.COMPONENT}"
-                            }
-                          }
-                     }
+                    stages {
+                      stage('Example') {
+                        steps {
+                          echo "Selected component: ${params.COMPONENT}"
+                        }
+                      }
+                    }
+                }
             '''.stripIndent())
         }
     }
