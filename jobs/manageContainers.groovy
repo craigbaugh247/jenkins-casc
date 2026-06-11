@@ -8,7 +8,7 @@ pipelineJob('manage-containers-job') {
                 pipeline {
                     agent any
                     parameters {
-                        choice(name: 'CONTAINER', choices: manageContainers(), description: 'Select the container')
+                        choice(name: 'CONTAINER', choices: listContainers(), description: 'Select the container')
                         choice(name: 'ACTION', choices: manageContainerActions(), description: 'Select the action')
                     }
                     stages {
