@@ -33,7 +33,7 @@ pipelineJob('prometheus/deploy-prometheus-rules') {
                                 echo 'Validating Prometheus rule files using promtool...'
                                 
                                 // Runs a temporary promtool container to check all yaml files in the rules directory
-                                sh 'FILES=$(ls *_rules.yaml 2>/dev/null || true); if [ -z "$FILES" ]; then echo "No files found in $(pwd)"; ls -la || true; exit 1; fi; echo "Found rule files: $FILES"; docker run --rm --entrypoint /bin/promtool -v "$(pwd)":/workspace -w /workspace prom/prometheus:latest check rules $FILES'
+                                sh 'FILES=$(ls *_rules.yaml 2>/dev/null || true); if [ -z "$FILES" ]; then echo "No files found in $(pwd)"; ls -la || true; exit 1; fi; echo "Found rule files: $FILES"; for file in $FILES; do; docker run --rm --entrypoint /bin/promtool -v "$(pwd)":/workspace -w /workspace prom/prometheus:latest check rules $file; done'
                             }
                         }
 
