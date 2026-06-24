@@ -5,7 +5,9 @@ pipelineJob('prometheus/deploy-prometheus-rules') {
         cps {
             script('''
                 pipeline {
-                    agent any
+                    agent {
+                        label 'linux'
+                    }
 
                     environment {
                         PROM_CONTAINER_NAME = 'prometheus'
